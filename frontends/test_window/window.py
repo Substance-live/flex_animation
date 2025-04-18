@@ -1,12 +1,10 @@
-# Подключаем pygame
 import pygame
-import random
 
-from engine import Engine
+from animation.action.engine import Engine, EngineConfig
 
 
 class Game:
-    """Класс-шаблон для игр на базе pygame.
+    """Класс-шаблон для игр на базе test_window.
 
     Для старта необходимо вызвать метод run().
 
@@ -26,30 +24,27 @@ class Game:
              КАДРЫ_В_СЕКУНДУ: int) -- конструктор класса.
     __draw()                       -- формирует изображение.
     __act()                        -- сюда вставить необходимые расчёты.
-    run()                          -- запуск pygame.
+    run()                          -- запуск test_window.
 
     ПРИМЕЧАНИЕ:
     -----------
     Образец для запуска кода:
-    game = Game(1024, 768, "Шаблон pygame", 60)
+    game = Game(1024, 768, "Шаблон test_window", 60)
     game.run()
     """
     # Задаём цвета
     BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
 
-    def __init__(self, width, height, caption, fps):
+    def __init__(self, screen_size: tuple[int, int], caption: str, fps: int, config: EngineConfig, circle_color=BLUE, line_color=BLUE):
         """Конструктор, настройка основных параметров."""
-        # Инициализация pygame и настройки окна
+        # Инициализация test_window и настройки окна
         pygame.init()
 
         # Настройка ширины и высоты окна
-        self.__WIDTH = width
-        self.__HEIGHT = height
-        self.__size = [self.WIDTH, self.__HEIGHT]
+        self.__size = screen_size
+        self.__WIDTH = self.__size[0]
+        self.__HEIGHT = self.__size[1]
 
         # Установка заголовка окна
         pygame.display.set_caption(caption)
@@ -57,7 +52,12 @@ class Game:
         # Инициализация сцены и установка размера
         self.scene = pygame.display.set_mode(self.__size)
 
-        self.engine = Engine(self.__size, 25)
+        # Инициализация логики
+        self.engine = Engine(self.__size, config)
+
+        # Инициализация кастомных цветов
+        self.circle_color = circle_color
+        self.line_color = line_color
 
         # Убрать комментарий, если нужно развёрнутое на весь экран окно
         # self.scene = pygame.display.set_mode(flags=pygame.FULLSCREEN)
@@ -85,7 +85,7 @@ class Game:
             if line.brightness is None:
                 continue
 
-            color = tuple((self.BLUE[i] * line.brightness for i in range(3)))
+            color = tuple((self.circle_color[i] * line.brightness for i in range(3)))
             pygame.draw.line(self.scene, color, line.start_pos, line.end_pos, line.width)
 
         for circle in self.engine.circles:
@@ -127,7 +127,3 @@ class Game:
         # Выход
         pygame.quit()
 
-
-if __name__ == '__main__':
-    game = Game(1024, 768, "Шаблон pygame", 60)
-    game.run()
