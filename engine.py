@@ -12,13 +12,14 @@ class Engine:
         self.lines: list[Line] = []
 
         for _ in range(count_obj):
-            circle = self.get_rand_circle(radius=15, start_speed=1.65)
+            circle = self.get_rand_circle(radius=15, start_speed=1.25)
             self.link_circle(circle)
             self.circles.append(circle)
 
     def link_circle(self, new_circle):
         for exist_circle in self.circles:
             self.lines.append(Line(first_circle=new_circle, second_circle=exist_circle, width=10, upper_distance=50, lower_distance=250))
+
 
     def get_rand_circle(self, radius: int, start_speed: float) -> Circle:
         angle = random.uniform(0, 2 * math.pi)
@@ -39,3 +40,5 @@ class Engine:
 
             elif not circle.radius < circle.pos[1] < self.screen[1] - circle.radius:
                 circle.change_direction('y')
+
+        self.lines.sort()

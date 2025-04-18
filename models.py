@@ -1,5 +1,6 @@
 from math import sqrt
 from dataclasses import dataclass
+from tkinter.filedialog import FileDialog
 
 
 @dataclass
@@ -32,6 +33,17 @@ class Line:
     width: int
     upper_distance: int
     lower_distance: int
+
+    def __lt__(self, other):
+        if isinstance(other, Line):
+            if self.brightness is None:
+                return True
+            elif other.brightness is None:
+                return False
+            else:
+                return self.brightness < other.brightness
+
+        raise Exception("Сравнение между не подходящими объектами")
 
     @property
     def start_pos(self):

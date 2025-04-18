@@ -106,6 +106,9 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         self.playGame = False
 
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                continue
+
             # Очищаем сцену
             self.scene.fill(self.BLACK)
 
