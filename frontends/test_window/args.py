@@ -15,7 +15,6 @@ def parse_args() -> Args:
         "-c",
         dest="count_obj",
         type=int,
-        choices=range(2, 100),
         default=25,
         help="Количество объектов (2-100)"
     )
@@ -23,7 +22,6 @@ def parse_args() -> Args:
         "-r",
         dest="circle_radius",
         type=int,
-        choices=range(5, 25),
         default=15,
         help="Радиус круга (5-25)"
     )
@@ -38,7 +36,6 @@ def parse_args() -> Args:
         "-w",
         dest="width_of_line",
         type=int,
-        choices=range(5, 25),
         default=10,
         help="Толщина линии (5-25)"
     )
