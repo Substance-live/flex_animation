@@ -2,15 +2,15 @@ from animation.action.engine import EngineConfig
 
 from test_window.window import Game
 
-screen_size = (1024, 768)
+screen_size = (1948, 1052)
 fps = 60
 config = EngineConfig(
-    count_obj = 25,
+    count_obj = 45,
     circle_radius = 15,
-    start_speed= 1.25,
+    start_speed= 1.5,
     width_of_line = 10,
-    upper_limit = 50,
-    lower_limit = 250
+    upper_limit = 0,
+    lower_limit = 300
 )
 
 if __name__ == '__main__':
