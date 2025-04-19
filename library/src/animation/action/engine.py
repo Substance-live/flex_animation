@@ -29,6 +29,8 @@ class Engine:
             self.link_circle(circle)
             self.circles.append(circle)
 
+        self.lines.sort()
+
     def link_circle(self, new_circle):
         for exist_circle in self.circles:
             self.lines.append(
