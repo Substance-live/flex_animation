@@ -20,7 +20,7 @@ def parse_args() -> Args:
     )
     parser.add_argument(
         "-r",
-        dest="circle_radius",
+        dest="obj_radius",
         type=int,
         default=15,
         help="Радиус круга (5-25)"

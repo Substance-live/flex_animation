@@ -1,10 +1,10 @@
-from animation.action.engine import EngineConfig
+from core.models.config import DataConfig
 
 from test_window.window import Game
 
 screen_size = (1948, 1052)
 fps = 60
-config = EngineConfig(
+config = DataConfig(
     count_obj = 45,
     circle_radius = 15,
     start_speed= 1.5,

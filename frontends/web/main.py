@@ -37,7 +37,7 @@ async def get_state():
 
     engine.move_figures()
 
-    return JSONResponse(content={"circles": circles, "lines": lines})
+    return JSONResponse(content={"models": circles, "lines": lines})
 
 @app.get("/get_initial_data")
 async def start_color():
