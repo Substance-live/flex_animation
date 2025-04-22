@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch("/state")
             .then(response => response.json())
             .then(data => {
-
                 ctx.fillStyle = "black";
 //                ctx.clearRect(0, 0, canvas.width, canvas.height)
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
