@@ -58,7 +58,7 @@ def parse_args() -> Args:
 
     return Args(
         count_obj=args.count_obj,
-        circle_radius=args.circle_radius,
+        circle_radius=args.obj_radius,
         start_speed=args.start_speed,
         width_of_line=args.width_of_line,
         upper_limit=args.upper_limit,
