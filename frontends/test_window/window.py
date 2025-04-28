@@ -6,6 +6,7 @@ from application.managers.manager import GameObjectManager, LineManager, Movemen
 from core.models.config import DataConfig
 from infrastructure.factories.factory import CircleFactory, DefaultLineFactory
 from infrastructure.lines.line import DefaultBrightnessCalculator, BrightnessComparisonStrategy
+from core.models.vector import Vector
 
 
 class Game:
@@ -32,6 +33,8 @@ class Game:
         self.circle_color = circle_color
         self.line_color = line_color
 
+        self.radius_of_LCM = config.radius_of_LCM
+
         self.clock = pygame.time.Clock()
         self.__FPS = fps
 
@@ -48,13 +51,13 @@ class Game:
     def __draw(self):
         """Отрисовывает линии и круги."""
         for line in self.engine.lines:
-            if line.brightness is None:
+            if line.brightness == 0:
                 continue
             color = tuple((self.circle_color[i] * line.brightness for i in range(3)))
             pygame.draw.line(self.scene, color, line.get_start_pos(), line.get_end_pos(), line.width)
 
         for obj in self.engine.circles:
-            pygame.draw.circle(self.scene, self.BLUE, obj.pos, obj.radius)
+            pygame.draw.circle(self.scene, self.BLUE, (obj.pos.x, obj.pos.y), obj.radius)
 
             # pygame.draw.rect(self.scene, self.BLUE,
             #                  (*obj.pos, obj.side, obj.side))
@@ -72,9 +75,16 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.playGame = False
+                # if event.type == pygame.MOUSEBUTTONDOWN:
+                #     x, y = pygame.mouse.get_pos()
+                #     self.engine.repel_circle(Vector(x, y), radius=150)
 
             if pygame.key.get_pressed()[pygame.K_SPACE]:
                 continue
+            elif pygame.mouse.get_pressed()[0]:
+                x, y = pygame.mouse.get_pos()
+                self.engine.repel_circle(Vector(x, y), radius=self.radius_of_LCM)
+
 
             self.scene.fill(self.BLACK)
             self.__draw()

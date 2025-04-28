@@ -1,5 +1,6 @@
-from core.interfaces.managers_interface import MovementHandler, LineCreator
 from application.managers.manager import GameObjectManager
+from core.interfaces.managers_interface import MovementHandler, LineCreator
+from core.models.vector import Vector
 
 
 class Engine:
@@ -18,7 +19,6 @@ class Engine:
         self.lines = self.create_lines()
 
     def create_lines(self):
-        lines = []
         for i in range(len(self.circles)):
             for j in range(i + 1, len(self.circles)):
                 line = self.line_manager.create_line(self.circles[i], self.circles[j])
@@ -28,3 +28,13 @@ class Engine:
     def move_figures(self):
         self.movement_manager.move(self.object_manager.get_object())
         self.line_manager.get_lines().sort()
+
+    def repel_circle(self, pos: Vector, radius: int):
+        objects = self.object_manager.get_objects_from_circle(pos, radius)
+        for obj in objects:
+            force_vector = obj.pos - pos
+            current_vector = obj.direction
+            result_vector = force_vector + current_vector
+
+            obj.direction = result_vector * (current_vector.length / result_vector.length)
+            print(f"now direction {obj.direction}")
