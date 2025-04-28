@@ -8,9 +8,6 @@ class Vector:
     x: int
     y: int
 
-    def get_distance_of_two_vectors(self, other: Self) -> float:
-        return (self - other).length
-
     @property
     def length(self):
         return sqrt(self.x ** 2 + self.y ** 2)
@@ -35,11 +32,10 @@ class Vector:
         if isinstance(other, int):
             return Vector(self.x * other, self.y * other)
         elif isinstance(other, float):
-            return Vector(int(self.x * other), int(self.y * other))
+            return Vector(round(self.x * other), round(self.y * other))
 
+    def tupled(self) -> tuple[int, int]:
+        return self.x, self.y
 
-if __name__ == '__main__':
-    a = Vector(5, 5)
-    b = Vector(1, 1)
-
-    print(a * 1.5)
+    def get_distance_of_two_vectors(self, other: Self) -> float:
+        return (self - other).length

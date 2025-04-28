@@ -27,10 +27,10 @@ class StraightLine(ILine):
         return self.first_circle.pos.get_distance_of_two_vectors(self.second_circle.pos)
 
     def get_start_pos(self):
-        return self.first_circle.pos
+        return self.first_circle.pos.tupled()
 
     def get_end_pos(self):
-        return self.second_circle.pos
+        return self.second_circle.pos.tupled()
 
 
 # Стандартный калькулятор яркости
@@ -43,7 +43,7 @@ class DefaultBrightnessCalculator(IBrightnessCalculator):
         elif upper_distance < length <= lower_distance:
             return 1 - (length - upper_distance) / (lower_distance - upper_distance)
         else:
-            return None
+            return 0
 
 
 # Стандартная стратегия сравнения по яркости

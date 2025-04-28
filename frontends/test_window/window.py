@@ -4,9 +4,9 @@ import pygame
 from application.engine.engine import Engine
 from application.managers.manager import GameObjectManager, LineManager, MovementManager
 from core.models.config import DataConfig
+from core.models.vector import Vector
 from infrastructure.factories.factory import CircleFactory, DefaultLineFactory
 from infrastructure.lines.line import DefaultBrightnessCalculator, BrightnessComparisonStrategy
-from core.models.vector import Vector
 
 
 class Game:
@@ -33,6 +33,8 @@ class Game:
         self.circle_color = circle_color
         self.line_color = line_color
 
+        self.radius_of_LCM = config.radius_of_LCM
+
         self.clock = pygame.time.Clock()
         self.__FPS = fps
 
@@ -49,7 +51,7 @@ class Game:
     def __draw(self):
         """Отрисовывает линии и круги."""
         for line in self.engine.lines:
-            if line.brightness is None:
+            if line.brightness == 0:
                 continue
             color = tuple((self.circle_color[i] * line.brightness for i in range(3)))
             pygame.draw.line(self.scene, color, line.get_start_pos(), line.get_end_pos(), line.width)
@@ -80,8 +82,7 @@ class Game:
                 continue
             elif pygame.mouse.get_pressed()[0]:
                 x, y = pygame.mouse.get_pos()
-                self.engine.repel_circle(Vector(x, y), radius=150)
-
+                self.engine.repel_circle(Vector(x, y), radius=self.radius_of_LCM)
 
             self.scene.fill(self.BLACK)
             self.__draw()
