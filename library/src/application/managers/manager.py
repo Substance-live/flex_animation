@@ -15,7 +15,7 @@ class GameObjectManager:
         self.factory = factory
         self.objects = []
 
-    def create_random_game_object(self) -> IGameObject:
+    def create_random_object(self) -> IGameObject:
         """Создает объект случайным образом в пределах экрана"""
         angle = random.uniform(0, 2 * pi)
         dx = round(cos(angle) * self.start_speed)

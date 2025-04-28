@@ -1,11 +1,11 @@
 import uuid
 
 from fastapi import FastAPI, Cookie
+from fastapi.requests import Request
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.requests import Request
-from fastapi.responses import JSONResponse
 
 from application.engine.engine import Engine
 from application.managers.manager import GameObjectManager, LineManager, MovementManager
@@ -18,7 +18,7 @@ templates = Jinja2Templates(directory="templates")
 
 screen_size = (800, 800)
 config = DataConfig(
-    count_obj=5,
+    count_obj=15,
     circle_radius=15,
     start_speed=1.05,
     width_of_line=10,
@@ -53,7 +53,8 @@ async def get_state(client_id: str = Cookie(default=None)):
         return JSONResponse(status_code=400, content={"detail": "No client_id"})
 
     if client_id not in engines.keys():
-        obj_manager = GameObjectManager(screen_size, config.circle_radius, config.start_speed, CircleFactory())
+        obj_manager = GameObjectManager(screen_size, config.circle_radius, config.start_speed,
+                                        CircleFactory())
         line_manager = LineManager(config.upper_limit, config.lower_limit, config.width_of_line,
                                    DefaultLineFactory(DefaultBrightnessCalculator(), BrightnessComparisonStrategy()))
         movement_manager = MovementManager(screen_size)

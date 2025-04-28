@@ -12,7 +12,7 @@ class Engine:
         self.movement_manager = movement_manager
 
         # Создание кругов и линий
-        self.circles = [self.object_manager.create_random_game_object() for _ in range(self.count_obj)]
+        self.circles = [self.object_manager.create_random_object() for _ in range(self.count_obj)]
         for circle in self.circles:
             self.object_manager.add_object(circle)
         self.lines = self.create_lines()

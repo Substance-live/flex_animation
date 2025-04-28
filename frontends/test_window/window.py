@@ -3,18 +3,18 @@ import pygame
 
 from application.engine.engine import Engine
 from application.managers.manager import GameObjectManager, LineManager, MovementManager
-
+from core.models.config import DataConfig
 from infrastructure.factories.factory import CircleFactory, DefaultLineFactory
 from infrastructure.lines.line import DefaultBrightnessCalculator, BrightnessComparisonStrategy
 
-from core.models.config import DataConfig
 
 class Game:
     """Класс-шаблон для игр на базе test_window."""
     BLACK = (0, 0, 0)
     BLUE = (0, 0, 255)
 
-    def __init__(self, screen_size: tuple[int, int], caption: str, fps: int, config: DataConfig, circle_color=BLUE, line_color=BLUE):
+    def __init__(self, screen_size: tuple[int, int], caption: str, fps: int, config: DataConfig, circle_color=BLUE,
+                 line_color=BLUE):
         pygame.init()
         self.__size = screen_size
         self.__WIDTH = self.__size[0]

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from core.interfaces.objects_interface import IGameObject
 
+
 @dataclass
 class Circle(IGameObject):
     pos: list[int]
@@ -27,6 +28,7 @@ class Circle(IGameObject):
     def get_boundary_offsets(self) -> tuple[int, int]:
         return self.radius, self.radius
 
+
 @dataclass
 class Square(IGameObject):
     pos: list[int]
@@ -47,4 +49,3 @@ class Square(IGameObject):
     def get_boundary_offsets(self) -> tuple[int, int]:
         half_side = self.side // 2
         return half_side, half_side
-
