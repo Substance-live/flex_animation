@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
 
+from core.models.vector import Vector
+
 
 class IGameObject(ABC):
-    pos: list[int]
+    pos: Vector
+    direction: Vector
 
     @abstractmethod
     def move(self):

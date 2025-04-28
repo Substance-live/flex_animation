@@ -1,10 +1,11 @@
-from math import pi, cos, sin
 import random
+from math import pi, cos, sin
 
-from core.interfaces.objects_interface import IGameObject
+from core.interfaces.factories_interface import LineFactory, GameObjectFactory
 from core.interfaces.lines_interface import ILine
 from core.interfaces.managers_interface import MovementHandler, LineCreator
-from core.interfaces.factories_interface import LineFactory, GameObjectFactory
+from core.interfaces.objects_interface import IGameObject
+from core.models.vector import Vector
 
 
 class GameObjectManager:
@@ -20,12 +21,11 @@ class GameObjectManager:
         angle = random.uniform(0, 2 * pi)
         dx = round(cos(angle) * self.start_speed)
         dy = round(sin(angle) * self.start_speed)
-
         # Используем фабрику для создания объекта
         return self.factory.create(
-            [random.randint(self.obj_size, self.screen_size[0] - self.obj_size),
-             random.randint(self.obj_size, self.screen_size[1] - self.obj_size)],
-            [dx, dy],
+            Vector(random.randint(self.obj_size, self.screen_size[0] - self.obj_size),
+                   random.randint(self.obj_size, self.screen_size[1] - self.obj_size)),
+            Vector(dx, dy),
             self.obj_size,
             self.start_speed
         )
@@ -38,6 +38,14 @@ class GameObjectManager:
         """Возвращает список объектов"""
         return self.objects
 
+    def get_objects_from_circle(self, center: Vector, radius: int) -> list[IGameObject]:
+        ret = []
+        for obj in self.objects:
+            if radius >= center.get_distance_of_two_vectors(obj.pos):
+                ret.append(obj)
+
+        return ret
+
 
 class MovementManager(MovementHandler):
     def __init__(self, screen_size: tuple[int, int]):
@@ -48,10 +56,10 @@ class MovementManager(MovementHandler):
             obj.move()
             offset_x, offset_y = obj.get_boundary_offsets()
 
-            if not offset_x < obj.pos[0] < self.screen_size[0] - offset_x:
+            if not offset_x < obj.pos.x < self.screen_size[0] - offset_x:
                 obj.change_direction('x')
 
-            if not offset_y < obj.pos[1] < self.screen_size[1] - offset_y:
+            if not offset_y < obj.pos.y < self.screen_size[1] - offset_y:
                 obj.change_direction('y')
 
 
