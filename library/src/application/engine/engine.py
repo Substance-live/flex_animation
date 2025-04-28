@@ -1,8 +1,10 @@
 from core.interfaces.managers_interface import MovementHandler, LineCreator
 from application.managers.manager import GameObjectManager
 
+
 class Engine:
-    def __init__(self, size_window: tuple[int, int], count_obj: int, object_manager: GameObjectManager, line_manager: LineCreator, movement_manager: MovementHandler):
+    def __init__(self, size_window: tuple[int, int], count_obj: int, object_manager: GameObjectManager,
+                 line_manager: LineCreator, movement_manager: MovementHandler):
         self.screen = size_window
         self.count_obj = count_obj
         self.object_manager = object_manager

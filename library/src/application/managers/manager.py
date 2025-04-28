@@ -1,10 +1,11 @@
 from math import pi, cos, sin
 import random
 
-from core.interfaces.objects_interface import  IGameObject
+from core.interfaces.objects_interface import IGameObject
 from core.interfaces.lines_interface import ILine
 from core.interfaces.managers_interface import MovementHandler, LineCreator
 from core.interfaces.factories_interface import LineFactory, GameObjectFactory
+
 
 class GameObjectManager:
     def __init__(self, screen_size: tuple[int, int], obj_size: int, start_speed: float, factory: GameObjectFactory):
@@ -37,6 +38,7 @@ class GameObjectManager:
         """Возвращает список объектов"""
         return self.objects
 
+
 class MovementManager(MovementHandler):
     def __init__(self, screen_size: tuple[int, int]):
         self.screen_size = screen_size
@@ -51,6 +53,7 @@ class MovementManager(MovementHandler):
 
             if not offset_y < obj.pos[1] < self.screen_size[1] - offset_y:
                 obj.change_direction('y')
+
 
 class LineManager(LineCreator):
     def __init__(self, upper_limit: int, lower_limit: int, width_of_line: int, line_factory: LineFactory):
@@ -68,4 +71,3 @@ class LineManager(LineCreator):
 
     def get_lines(self):
         return self.lines
-
